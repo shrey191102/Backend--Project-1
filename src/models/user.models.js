@@ -51,14 +51,14 @@ const userSchema = new Schema({
 
 )
 
-userSchema.pre("save", function(next){
+userSchema.pre("save", async function(next){
     // agr fiels modified hi nhi hua to bar bar save mt kro
     if(!this.isModified("password")) return next()
     // bar bar hash kro
     // bcrypt.hash(password,saltRounds)
     // saltRounds is a number that defines how many times the 
     //  needs to be hashed. Higher the number, more secure the password.
-    this.password=bcrypt.hash(this.password,10)
+    this.password= await bcrypt.hash(this.password,10)
     next()
 })
 
